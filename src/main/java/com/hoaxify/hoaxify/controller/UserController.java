@@ -8,17 +8,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class UserController {
+
+    public static final String API_1_0_USERS = "/api/1.0/users";
 
     @Autowired
     UserService userService;
 
-    @PostMapping("/api/1.0/users")
-    public GenericResponse createUser(@RequestBody User user) {
+    @PostMapping(API_1_0_USERS)
+    public GenericResponse createUser(@Valid @RequestBody User user) {
         userService.save(user);
-        GenericResponse body = new GenericResponse("User has been created");
-
-        return body;
+        return new GenericResponse("User has been created");
     }
 }
