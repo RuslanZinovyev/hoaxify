@@ -1,10 +1,9 @@
 package com.hoaxify.hoaxify.user;
 
+import com.hoaxify.hoaxify.annotation.UniqueUserName;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -17,17 +16,18 @@ public class User {
     @GeneratedValue
     private long id;
 
-    @NotNull
+    @NotNull(message = "{hoaxify.constraints.userName.NotNull.message}")
     @Size(min = 4, max = 255)
+    @UniqueUserName
     private String userName;
 
-    @NotNull
+    @NotNull(message = "{hoaxify.constraints.displayName.NotNull.message}")
     @Size(min = 4, max = 255)
     private String displayName;
 
-    @NotNull
+    @NotNull(message = "{hoaxify.constraints.password.NotNull.message}")
     @Size(min = 8, max = 255)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "{hoaxify.constraints.password.Pattern.message}")
     private String password;
 
 }

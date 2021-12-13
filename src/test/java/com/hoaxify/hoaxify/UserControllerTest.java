@@ -1,5 +1,6 @@
 package com.hoaxify.hoaxify;
 
+import com.hoaxify.hoaxify.exception.ApiError;
 import com.hoaxify.hoaxify.repository.UserRepository;
 import com.hoaxify.hoaxify.shared.GenericResponse;
 import com.hoaxify.hoaxify.user.User;
@@ -15,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -191,6 +193,68 @@ public class UserControllerTest {
         ResponseEntity<Object> response = postSignup(user, Object.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void postUser_whenUserIsInvalid_receiveApiError() {
+        User user = new User();
+        ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
+
+        assertThat(response.getBody().getUrl()).isEqualTo(API_1_0_USERS);
+    }
+
+    @Test
+    public void postUser_whenUserIsInvalid_receiveApiErrorWithValidationErrors() {
+        User user = new User();
+        ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
+
+        assertThat(response.getBody().getValidationErrors().size()).isEqualTo(3);
+    }
+
+    @Test
+    public void postUser_whenUserHasNullUsername_receiveMessageOfNullErrorForUserName() {
+        User user = createValidUser();
+        user.setUserName(null);
+        ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
+        Map<String, String> validationErrors = response.getBody().getValidationErrors();
+        assertThat(validationErrors.get("userName")).isEqualTo("Username cannot be null");
+    }
+
+    @Test
+    public void postUser_whenUserHasNullDisplayName_receiveMessageOfNullErrorForUserName() {
+        User user = createValidUser();
+        user.setDisplayName(null);
+        ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
+        Map<String, String> validationErrors = response.getBody().getValidationErrors();
+        assertThat(validationErrors.get("displayName")).isEqualTo("Display name cannot be null");
+    }
+
+    @Test
+    public void postUser_whenUserHasNullPassword_receiveMessageOfNullErrorForUserName() {
+        User user = createValidUser();
+        user.setPassword(null);
+        ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
+        Map<String, String> validationErrors = response.getBody().getValidationErrors();
+        assertThat(validationErrors.get("password")).isEqualTo("Password cannot be null");
+    }
+
+    @Test
+    public void postUser_whenAnotherUserHasSameUsername_receiveBadRequest() {
+        userRepository.save(createValidUser());
+
+        User user = createValidUser();
+        ResponseEntity<Object> response = postSignup(user, Object.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void postUser_whenAnotherUserHasSameUsername_receiveMessageOfDuplicateUserName() {
+        userRepository.save(createValidUser());
+
+        User user = createValidUser();
+        ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
+        Map<String, String> validationErrors = response.getBody().getValidationErrors();
+        assertThat(validationErrors.get("userName")).isEqualTo("This username is already exist in the system");
     }
 
     /**
