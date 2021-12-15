@@ -28,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserControllerTest {
 
     public static final String API_1_0_USERS = "/api/1.0/users";
+
     @Autowired
     private TestRestTemplate testRestTemplate;
 
