@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.hoaxify.hoaxify.TestUtils.createValidUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -261,14 +262,6 @@ public class UserControllerTest {
     /**
      * Auxiliary methods
      */
-     private User createValidUser() {
-         User user = new User();
-         user.setUserName("test-user");
-         user.setDisplayName("test-display");
-         user.setPassword("P4ssword");
-
-         return user;
-     }
 
     private  <T> ResponseEntity<T> postSignup(Object request, Class<T> responseType) {
         return testRestTemplate.postForEntity(API_1_0_USERS, request, responseType);

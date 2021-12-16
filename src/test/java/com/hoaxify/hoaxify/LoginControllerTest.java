@@ -1,6 +1,9 @@
 package com.hoaxify.hoaxify;
 
 import com.hoaxify.hoaxify.exception.ApiError;
+import com.hoaxify.hoaxify.repository.UserRepository;
+import com.hoaxify.hoaxify.service.UserService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.hoaxify.hoaxify.TestUtils.createValidUser;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -23,6 +27,18 @@ public class LoginControllerTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Before
+    public void cleanUp() {
+        userRepository.deleteAll();
+        testRestTemplate.getRestTemplate().getInterceptors().clear();
+    }
 
     /**
      * Method name conventions is methodName_condition_expectedBehaviour
@@ -63,6 +79,14 @@ public class LoginControllerTest {
         ResponseEntity<Object> response = login(Object.class);
 
         assertThat(response.getHeaders().containsKey("WWW-Authenticate")).isFalse();
+    }
+
+    @Test
+    public void postLogin_withValidCredentials_receiveOk() {
+        userService.save(createValidUser());
+        authenticate();
+        ResponseEntity<Object> response = login(Object.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
 
