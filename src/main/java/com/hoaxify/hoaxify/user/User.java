@@ -44,6 +44,10 @@ public class User implements UserDetails {
         return AuthorityUtils.createAuthorityList("Role_User");
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
     @Override
     @Transient
     public String getUsername() {
