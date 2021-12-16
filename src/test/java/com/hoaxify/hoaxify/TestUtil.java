@@ -2,9 +2,7 @@ package com.hoaxify.hoaxify;
 
 import com.hoaxify.hoaxify.user.User;
 
-public class TestUtils {
-
-    private TestUtils() {}
+public class TestUtil {
 
     public static User createValidUser() {
         User user = new User();
