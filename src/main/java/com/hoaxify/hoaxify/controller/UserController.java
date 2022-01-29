@@ -1,10 +1,13 @@
 package com.hoaxify.hoaxify.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.hoaxify.hoaxify.exception.ApiError;
 import com.hoaxify.hoaxify.service.UserService;
 import com.hoaxify.hoaxify.shared.GenericResponse;
+import com.hoaxify.hoaxify.shared.Views;
 import com.hoaxify.hoaxify.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -17,14 +20,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/1.0/users")
 public class UserController {
 
-    public static final String API_1_0_USERS = "/api/1.0/users";
-
-    @Autowired
     UserService userService;
 
-    @PostMapping(API_1_0_USERS)
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping()
+    @JsonView(Views.Base.class)
+    Page<?> getUsers() {
+        return userService.getUsers();
+    }
+
+    @PostMapping()
     public GenericResponse createUser(@Valid @RequestBody User user) {
         userService.save(user);
         return new GenericResponse("User has been created");
