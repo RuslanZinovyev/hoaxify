@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.hoaxify.dto.UserDto;
 import com.hoaxify.hoaxify.exception.ApiError;
 import com.hoaxify.hoaxify.service.UserService;
+import com.hoaxify.hoaxify.shared.CurrentUser;
 import com.hoaxify.hoaxify.shared.GenericResponse;
 import com.hoaxify.hoaxify.shared.Views;
 import com.hoaxify.hoaxify.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -32,8 +34,8 @@ public class UserController {
     }
 
     @GetMapping()
-    Page<UserDto> getUsers() {
-        return userService.getUsers().map(UserDto::new);
+    Page<UserDto> getUsers(@CurrentUser User loggedInUser, Pageable page) {
+        return userService.getUsers(loggedInUser, page).map(UserDto::new);
     }
 
     @PostMapping()

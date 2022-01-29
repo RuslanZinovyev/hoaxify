@@ -22,7 +22,6 @@ import java.util.Map;
 
 import static com.hoaxify.hoaxify.TestUtil.createValidUser;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.in;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
