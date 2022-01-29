@@ -1,6 +1,7 @@
 package com.hoaxify.hoaxify.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.hoaxify.dto.UserDto;
 import com.hoaxify.hoaxify.exception.ApiError;
 import com.hoaxify.hoaxify.service.UserService;
 import com.hoaxify.hoaxify.shared.GenericResponse;
@@ -31,9 +32,8 @@ public class UserController {
     }
 
     @GetMapping()
-    @JsonView(Views.Base.class)
-    Page<?> getUsers() {
-        return userService.getUsers();
+    Page<UserDto> getUsers() {
+        return userService.getUsers().map(UserDto::new);
     }
 
     @PostMapping()
