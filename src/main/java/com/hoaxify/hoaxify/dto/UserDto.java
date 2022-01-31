@@ -1,4 +1,4 @@
-package com.hoaxify.dto;
+package com.hoaxify.hoaxify.dto;
 
 import com.hoaxify.hoaxify.user.User;
 import lombok.Data;

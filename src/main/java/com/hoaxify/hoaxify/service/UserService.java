@@ -27,7 +27,7 @@ public class UserService {
 
     public Page<User> getUsers(User loggedInUser, Pageable pageable) {
         if (loggedInUser != null) {
-            return userRepository.findByUserNameNot(loggedInUser.getUserName(), pageable);
+            return userRepository.findByUsernameNot(loggedInUser.getUsername(), pageable);
         }
         return userRepository.findAll(pageable);
     }

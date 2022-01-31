@@ -1,12 +1,10 @@
 package com.hoaxify.hoaxify.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.hoaxify.dto.UserDto;
+import com.hoaxify.hoaxify.dto.UserDto;
 import com.hoaxify.hoaxify.exception.ApiError;
 import com.hoaxify.hoaxify.service.UserService;
 import com.hoaxify.hoaxify.shared.CurrentUser;
 import com.hoaxify.hoaxify.shared.GenericResponse;
-import com.hoaxify.hoaxify.shared.Views;
 import com.hoaxify.hoaxify.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

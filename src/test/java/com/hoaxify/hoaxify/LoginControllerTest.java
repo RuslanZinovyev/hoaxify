@@ -130,8 +130,8 @@ public class LoginControllerTest {
         authenticate();
         ResponseEntity<Map<String, Object>> response = login(new ParameterizedTypeReference<>() {});
         Map<String, Object> body = response.getBody();
-        String userName = (String) body.get("userName");
-        assertThat(userName).isEqualTo(inDB.getUserName());
+        String userName = (String) body.get("username");
+        assertThat(userName).isEqualTo(inDB.getUsername());
     }
 
     @Test

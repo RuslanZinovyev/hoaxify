@@ -6,7 +6,7 @@ public class TestUtil {
 
     public static User createValidUser() {
         User user = new User();
-        user.setUserName("test-user");
+        user.setUsername("test-user");
         user.setDisplayName("test-display");
         user.setPassword("P4ssword");
         user.setImage("profile-image.png");
@@ -15,7 +15,7 @@ public class TestUtil {
 
     public static User createValidUser(String userName) {
         User user = createValidUser();
-        user.setUserName(userName);
+        user.setUsername(userName);
         return user;
     }
 }

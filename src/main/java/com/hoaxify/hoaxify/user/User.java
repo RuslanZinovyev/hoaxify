@@ -30,7 +30,7 @@ public class User implements UserDetails {
     @Size(min = 4, max = 255)
     @UniqueUserName
     @JsonView(Views.Base.class)
-    private String userName;
+    private String username;
 
     @NotNull(message = "{hoaxify.constraints.displayName.NotNull.message}")
     @Size(min = 4, max = 255)
@@ -51,14 +51,10 @@ public class User implements UserDetails {
         return AuthorityUtils.createAuthorityList("Role_User");
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     @Override
     @Transient
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class HoaxifyApplication {
 		return args -> IntStream.rangeClosed(1, 15)
 				.mapToObj(i -> {
 					User user = new User();
-					user.setUserName("user" + i);
+					user.setUsername("user" + i);
 					user.setDisplayName("display" + i);
 					user.setPassword("P4ssword");
 					return user;

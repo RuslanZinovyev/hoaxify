@@ -98,7 +98,7 @@ public class UserControllerTest {
     @Test
     public void postUser_whenUserHasNullUsername_receiveBadRequest() {
         User user = createValidUser();
-        user.setUserName(null);
+        user.setUsername(null);
         ResponseEntity<Object> response = postSignup(user, Object.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -125,7 +125,7 @@ public class UserControllerTest {
     @Test
     public void postUser_whenUserHasUserNameWithLessThanRequiredCharacters_receiveBadRequest() {
         User user = createValidUser();
-        user.setUserName("abc");
+        user.setUsername("abc");
         ResponseEntity<Object> response = postSignup(user, Object.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -141,7 +141,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void postUser_whenUserHasPasswordeWithLessThanRequiredCharacters_receiveBadRequest() {
+    public void postUser_whenUserHasPasswordWithLessThanRequiredCharacters_receiveBadRequest() {
         User user = createValidUser();
         user.setPassword("P4ssw");
         ResponseEntity<Object> response = postSignup(user, Object.class);
@@ -153,7 +153,7 @@ public class UserControllerTest {
     public void postUser_whenUserHasUserNameExceedTheLengthLimit_receiveBadRequest() {
         User user = createValidUser();
         String longUserName = IntStream.rangeClosed(1, 256).mapToObj(x -> "a").collect(Collectors.joining());
-        user.setUserName(longUserName);
+        user.setUsername(longUserName);
         ResponseEntity<Object> response = postSignup(user, Object.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -163,7 +163,7 @@ public class UserControllerTest {
     public void postUser_whenUserHasDisplayNameExceedTheLengthLimit_receiveBadRequest() {
         User user = createValidUser();
         String longDisplayName = IntStream.rangeClosed(1, 256).mapToObj(x -> "a").collect(Collectors.joining());
-        user.setUserName(longDisplayName);
+        user.setUsername(longDisplayName);
         ResponseEntity<Object> response = postSignup(user, Object.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -225,10 +225,10 @@ public class UserControllerTest {
     @Test
     public void postUser_whenUserHasNullUsername_receiveMessageOfNullErrorForUserName() {
         User user = createValidUser();
-        user.setUserName(null);
+        user.setUsername(null);
         ResponseEntity<ApiError> response = postSignup(user, ApiError.class);
         Map<String, String> validationErrors = response.getBody().getValidationErrors();
-        assertThat(validationErrors.get("userName")).isEqualTo("Username cannot be null");
+        assertThat(validationErrors.get("username")).isEqualTo("Username cannot be null");
     }
 
     @Test

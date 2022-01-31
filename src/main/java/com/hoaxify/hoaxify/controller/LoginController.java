@@ -1,6 +1,6 @@
 package com.hoaxify.hoaxify.controller;
 
-import com.hoaxify.dto.UserDto;
+import com.hoaxify.hoaxify.dto.UserDto;
 import com.hoaxify.hoaxify.shared.CurrentUser;
 import com.hoaxify.hoaxify.user.User;
 import org.springframework.web.bind.annotation.PostMapping;
