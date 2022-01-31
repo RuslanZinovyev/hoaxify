@@ -8,7 +8,7 @@ public class UserDto {
 
     private long id;
 
-    private String userName;
+    private String username;
 
     private String displayName;
 
@@ -16,7 +16,7 @@ public class UserDto {
 
     public UserDto(User user) {
         this.setId(user.getId());
-        this.setUserName(user.getUserName());
+        this.setUsername(user.getUsername());
         this.setDisplayName(user.getDisplayName());
         this.setImage(user.getImage());
     }
